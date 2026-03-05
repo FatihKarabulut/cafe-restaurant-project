@@ -1,0 +1,26 @@
+{
+  "name": "Demlik",
+  "version": "1.0.0",
+  "description": "",
+  "main": "controler/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha repo/repositoryTest.js ",
+    "test1": "mocha dataService/dataServiceTest.js",
+    "start": "node controler/app.js"
+  },
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "chai": "^6.2.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "mocha": "^11.7.5"
+  }
+}

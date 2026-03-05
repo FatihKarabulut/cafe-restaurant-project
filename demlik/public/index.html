@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demlik Cafe</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            background:url("https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d") center/cover fixed;
+            font-family: 'Georgia', serif;
+        }
+
+        .overlay{
+            background:rgba(25,15,5,0.9);
+            min-height:100vh;
+            color:#f8e7c2;
+        }
+
+        .navbar{
+            background:rgba(20,10,5,0.95);
+        }
+
+        .brand{
+            font-size:28px;
+            font-weight:bold;
+            color:#d4af37 !important;
+        }
+
+        .category-btn{
+            border:1px solid #d4af37;
+            color:#d4af37;
+            transition:0.3s;
+        }
+
+        .category-btn:hover,
+        .category-btn.active{
+            background:#d4af37;
+            color:#1a0f05;
+        }
+
+        .card-product{
+            background:#3a2414;
+            border-radius:20px;
+            overflow:hidden;
+            transition:0.4s;
+        }
+
+        .card-product:hover{
+            transform:translateY(-8px);
+            box-shadow:0 15px 35px rgba(212,175,55,0.5);
+        }
+
+        .card-product img{
+            height:220px;
+            object-fit:cover;
+        }
+
+        .price{
+            color:#d4af37;
+            font-weight:bold;
+            font-size:18px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="overlay">
+
+    <nav class="navbar navbar-expand-lg px-4 py-3">
+        <a class="brand" href="#">☕ Demlik Cafe</a>
+
+        <div class="ms-auto d-flex gap-2">
+            <button class="btn category-btn active" onclick="loadAll(this)">Tümü</button>
+            <button class="btn category-btn" onclick="loadCategory('meal',this)">Yemek</button>
+            <button class="btn category-btn" onclick="loadCategory('hot',this)">Sıcak</button>
+            <button class="btn category-btn" onclick="loadCategory('cold',this)">Soğuk</button>
+            <button class="btn category-btn" onclick="loadCategory('dessert',this)">Tatlı</button>
+        </div>
+    </nav>
+
+    <section class="text-center py-5">
+        <h1 class="display-4 fw-bold text-warning">Demlik Cafe</h1>
+        <p class="lead">Tarihin dokusunda demlenen lezzet</p>
+    </section>
+
+    <div class="container pb-5">
+        <div id="products" class="row g-4"></div>
+    </div>
+
+
+
+</div>
+
+<script>
+    const BASE_URL="http://localhost:7272";
+
+    /* Aktif Buton */
+    function setActive(btn){
+        document.querySelectorAll(".category-btn")
+            .forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+    }
+
+    /* Kart Oluştur */
+    function createCard(p){
+        return `
+    <div class="col-md-4 col-lg-3">
+        <div class="card-product">
+            <img src="${p.products_img}" class="w-100">
+            <div class="p-3 text-center">
+                <h5>${p.products_name}</h5>
+                <p class="price">${p.products_price} ₺</p>
+            </div>
+        </div>
+    </div>`;
+    }
+
+    /* Ürünleri Göster */
+    function render(data){
+        const container=document.getElementById("products");
+        container.innerHTML="";
+
+        if(!Array.isArray(data) || data.length===0){
+            container.innerHTML=`<p class="text-warning">Ürün bulunamadı</p>`;
+            return;
+        }
+
+        data.forEach(p=>{
+            container.innerHTML+=createCard(p);
+        });
+    }
+
+    /* Tüm Ürünler */
+    async function loadAll(btn){
+        if(btn) setActive(btn);
+
+        const res=await fetch(`${BASE_URL}/findByProduct`,{
+            credentials:"include"
+        });
+        const data=await res.json();
+        render(data);
+    }
+
+    /* Kategori */
+    async function loadCategory(category,btn){
+        if(btn) setActive(btn);
+
+        const res=await fetch(`${BASE_URL}/findByCategoryName?category=${category}`,{
+            credentials:"include"
+        });
+        const data=await res.json();
+        render(data);
+    }
+
+    window.onload=()=>loadAll(document.querySelector(".category-btn"));
+</script>
+
+</body>
+</html>
