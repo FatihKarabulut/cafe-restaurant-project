@@ -8,25 +8,17 @@ project
 │   ├── endpoint.js
 │   └── generator.js  // token
 │   ├── global.js
-│   └── middleware.js
+│   └── middleware.js # verifyToken, role authorization
 │
 ├── dataService
 │   └── service.js   # Database operations
 │   ├── getuserArrayJson.js
 │   └── dataServiceTest.js        
 │
-├── middleware
-│   └── middleware.js      # verifyToken, role authorization
-│
-├── auth
-│   ├── generator.js       # JWT token generators
-│   └── global.js          # Token cookie names
-│
 ├── public                 # Admin panel frontend
 │   ├── index.html
 │   └── login.html
 │
-├── app.js
 └── package.json
 ```
 
