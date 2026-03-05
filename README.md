@@ -11,9 +11,17 @@ project
 │   └── middleware.js # verifyToken, role authorization
 │
 ├── dataService
-│   └── service.js   # Database operations
+│   └── service.js  
 │   ├── getuserArrayJson.js
 │   └── dataServiceTest.js        
+│
+├── repo
+│   └── repository.js   #  # Database operations
+│   ├── dbClient.js
+│   └── ddl.sql.js
+│   └── getproductAndUserArrayJson.js
+│   └── query.js
+│   └── repositoryTest.js
 │
 ├── public                 # Admin panel frontend
 │   ├── index.html
