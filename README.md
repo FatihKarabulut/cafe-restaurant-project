@@ -37,25 +37,28 @@ The backend communicates with a **PostgreSQL database** and provides endpoints f
 project-root
 │
 ├── controller
-│   └── endpoint.js
+│   └── app.js
+│   ├──  endpoint.js
+│   ├──  generator.js
+│   ├──  global.js
+│   ├──  middleware.js
 │
-├── services
-│   └── productService.js
+├── dataService
+│   └── service.js
+│   ├──  getuserArrayJson.js
+│   ├──  dataServiceTest.js
 │
-├── database
-│   └── connection.js
+├── repo
+│   └── repository.js
+│   ├──  dbClient.js
+│   ├──  getProductAndUserArrayJson.js
+│   ├──  repositoryTest.js
+│   ├──  query.js
 │
 ├── public
 │   ├── index.html
-│   ├── admin
-│   │   ├── dashboard.html
-│   │   ├── products.html
 │   │   └── login.html
 │
-├── routes
-│   └── productRoutes.js
-│
-├── server.js
 └── package.json
 ```
 
