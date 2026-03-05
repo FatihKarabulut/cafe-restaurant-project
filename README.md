@@ -1,198 +1,161 @@
-# ☕ Cafe / Restaurant Backend API
-
-A **Node.js & Express based backend service** for managing a cafe or restaurant system.
-This project provides a RESTful API that allows administrators to manage products such as **hot drinks, cold drinks, desserts, and meals**.
-
-The backend communicates with a **PostgreSQL database** and provides endpoints for retrieving and managing product data.
-
----
-
-# 🚀 Features
-
-* RESTful API architecture
-* Product management system
-* Category-based product filtering
-* PostgreSQL database integration
-* Secure backend structure
-* Admin dashboard support
-* JSON API responses
-* Scalable service-based architecture
-
----
-
-# 🛠️ Technologies Used
-
-* **Node.js**
-* **Express.js**
-* **PostgreSQL**
-* **JavaScript (ES6 Modules)**
-* **REST API**
-* **CSS / HTML (Admin Panel Frontend)**
-
----
-
 # 📂 Project Structure
 
 ```
-project-root
+project
 │
 ├── controller
-│   └── app.js
-│   ├──  endpoint.js
-│   ├──  generator.js
-│   ├──  global.js
-│   ├──  middleware.js
+│   └── endpoint.js        # All API endpoints
 │
 ├── dataService
-│   └── service.js
-│   ├──  getuserArrayJson.js
-│   ├──  dataServiceTest.js
+│   └── service.js         # Database operations
 │
-├── repo
-│   └── repository.js
-│   ├──  dbClient.js
-│   ├──  getProductAndUserArrayJson.js
-│   ├──  repositoryTest.js
-│   ├──  query.js
+├── middleware
+│   └── middleware.js      # verifyToken, role authorization
 │
-├── public
-│   ├── index.html
-│   │   └── login.html
+├── auth
+│   ├── generator.js       # JWT token generators
+│   └── global.js          # Token cookie names
 │
+├── public                 # Admin panel frontend
+│   ├── login.html
+│   ├── dashboard.html
+│   └── products.html
+│
+├── app.js
 └── package.json
 ```
 
 ---
 
-# 📦 Installation
+# 🔐 Authentication System
 
-Clone the repository
+The API uses **JWT authentication with HTTP-only cookies**.
 
-```bash
-    git clone https://github.com/FatihKarabulut/cafe-restaurant-project
-```
+When a user logs in:
 
-Go to project directory
-
-```bash
-    cd demlik/controler
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Start the server
-
-```bash
-    npm start
-```
-
-Server will run at
+1. Server verifies username and password
+2. Generates two tokens
 
 ```
-http://localhost:7272
+Access Token
+Refresh Token
+```
+
+3. Tokens are stored in cookies:
+
+```
+ACCESS_TOKEN
+REFRESH_TOKEN
+```
+
+### Access Token
+
+* Short lifetime
+* Used for protected endpoints
+
+### Refresh Token
+
+* Longer lifetime
+* Used to generate a new access token
+
+Endpoint:
+
+```
+GET /refreshToken
 ```
 
 ---
 
-# 🗄️ Database Schema
+# 🛡 Authorization
 
-```sql
-create table if not exists products(
-    products_id serial primary key,
-    products_img text not null,
-    products_name varchar(500) unique not null,
-    products_price numeric(10,2) check(products_price > 0) not null,
-    products_category varchar(50) not null 
-    check(products_category in ('hot','cold','dessert','meal'))
-);
+The system uses middleware for role control.
+
+### verifyToken
+
+Validates the JWT token.
+
+### isUserAndAdmin
+
+Allows access to:
+
+```
+admin
+user
+```
+
+### isAdmin
+
+Allows access only to:
+
+```
+admin
 ```
 
 ---
 
 # 📡 API Endpoints
 
-### Get all products
+## Authentication
 
 ```
-GET /findByProduct
-```
-
----
-
-### Get products by category
-
-```
-GET /findByCategory?category=hot
-GET /findByCategory?category=cold
-GET /findByCategory?category=dessert
-GET /findByCategory?category=meal
+POST /login
+GET  /refreshToken
+GET  /logout
 ```
 
 ---
 
-# 📸 Example Response
+## Products
 
-```json
-[
-  {
-    "products_id": 1,
-    "products_name": "Espresso",
-    "products_price": 45.00,
-    "products_img": "https://image-url",
-    "products_category": "hot"
-  }
-]
+```
+POST   /products
+GET    /findByProduct
+GET    /findByProductName
+GET    /findByCategoryName
+PATCH  /updatePrice
+DELETE /deleteByName
+DELETE /DeleteProduct
 ```
 
 ---
 
-# 🔐 Admin Panel
-
-The project also includes a simple **Admin Dashboard** for:
-
-* Managing products
-* Viewing product list
-* Adding new products
-* Updating existing products
-* Deleting products
-
-Admin panel files are located in:
+## Users
 
 ```
-/public/admin
+POST   /userSave
+GET    /findByUser
+PATCH  /updateUserPassword
+PATCH  /updateUserNameAndPassword
+DELETE /deleteByUserName
 ```
 
 ---
 
-# ⚠️ Notes
+# ▶ Running the Project
 
-* Images are stored using **external image URLs**
-* Backend uses **Express static middleware** to serve frontend files
-* Ensure PostgreSQL is running before starting the server
+Install dependencies
 
----
+```
+npm install
+```
 
-# 📌 Future Improvements
+Run server
 
-* JWT Authentication
-* Role-based admin system
-* Order management
-* Payment integration
-* Analytics dashboard
-* Docker support
+```
+node app.js
+```
+
+Server will start:
+
+```
+localhost:PORT
+```
 
 ---
 
 # 👨‍💻 Author
 
-Developed by **Fatih Karabulut**
+Fatih Karabulut
 
----
-
-# ⭐ Support
-
-If you find this project useful, consider giving it a **star on GitHub** ⭐
+GitHub
+https://github.com/FatihKarabulut
