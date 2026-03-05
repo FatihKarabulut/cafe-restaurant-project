@@ -69,13 +69,13 @@ project-root
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/project-name.git
+    git clone https://github.com/FatihKarabulut/cafe-restaurant-project
 ```
 
 Go to project directory
 
 ```bash
-cd project-name
+    cd demlik/controler
 ```
 
 Install dependencies
@@ -87,7 +87,7 @@ npm install
 Start the server
 
 ```bash
-node server.js
+    npm start
 ```
 
 Server will run at
