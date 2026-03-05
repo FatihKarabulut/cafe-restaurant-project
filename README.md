@@ -4,10 +4,16 @@
 project
 │
 ├── controller
-│   └── endpoint.js        # All API endpoints
+│   └── app.js        # All API endpoints
+│   ├── endpoint.js
+│   └── generator.js  // token
+│   ├── global.js
+│   └── middleware.js
 │
 ├── dataService
-│   └── service.js         # Database operations
+│   └── service.js   # Database operations
+│   ├── getuserArrayJson.js
+│   └── dataServiceTest.js        
 │
 ├── middleware
 │   └── middleware.js      # verifyToken, role authorization
@@ -17,9 +23,8 @@ project
 │   └── global.js          # Token cookie names
 │
 ├── public                 # Admin panel frontend
-│   ├── login.html
-│   ├── dashboard.html
-│   └── products.html
+│   ├── index.html
+│   └── login.html
 │
 ├── app.js
 └── package.json
@@ -142,13 +147,17 @@ npm install
 Run server
 
 ```
-node app.js
+cd demlik/controler
+```
+
+```
+npm start
 ```
 
 Server will start:
 
 ```
-localhost:PORT
+localhost:7272
 ```
 
 ---
